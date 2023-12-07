@@ -35,8 +35,7 @@
         }
     
         # IF USER ALREADY EXIST ?
-        $select = "SELECT * FROM user_form WHERE email = '$email' && password = '$pass' JOIN seller_form ON user_form.email = '$email' && password = '$pass' = seller_form.email = '$email' && password = '$pass'" ;
-
+        $select = "SELECT * FROM user_form WHERE email = '$email' && password = '$pass' ";
         
 
         $result = mysqli_query($conn, $select);
@@ -52,18 +51,24 @@
                     $error[] = 'You have successfully registerd as Customer / Buyer !!!';
                     $insert = "INSERT INTO user_form(name, email, password, user_type) VALUES(' $name', '$email', '$pass',  '$user_type')";
                     mysqli_query($conn, $insert);
+                    sleep(1);
+                    header('location:login_page.php');
                 } 
                 
                 else if ($user_type == 'Seller') {
                     $error[] = 'You have successfully registerd as Seller !!!';
                     $insert = "INSERT INTO seller_form(name, email, password, user_type,address,telephone) VALUES(' $name', '$email', '$pass',  '$user_type', '$address', '$telephone' )";
                     mysqli_query($conn, $insert);
+                    sleep(1);
+                    header('location:login_page.php');
                 } 
                 
                 else if ($user_type == 'IndustryExpert') {
                     $error[] = 'You have successfully registerd as Industry Expert !!!';
                     $insert = "INSERT INTO expert(name, email, password, user_type,address,telephone,qualifications) VALUES(' $name', '$email', '$pass',  '$user_type', '$aaddress', '$ttelephone', '$qualifications')";
                     mysqli_query($conn, $insert);
+                    sleep(1);
+                    header('location:login_page.php');
                 }
                 mysqli_close($conn);
             }
@@ -84,12 +89,7 @@
             }
             ?>
 
-            <select name="user_type" onchange="displaySellerInputField('selectionId')" id="selectionId">
-                <option value="Customer">Customer</option>
-                <option value="Seller">Seller</option>
-                <option value="IndustryExpert">Industry Expert</option>
-            </select>
-
+         
             <script>
                 displaySellerInputField = (idele) => {
                     gettingElement = (document.getElementById(idele));
@@ -119,21 +119,24 @@
                     }
                 }
             </script>
-
+            
+            <select name="user_type" onchange="displaySellerInputField('selectionId')" id="selectionId">
+                <option value="Customer">Customer</option>
+                <option value="Seller">Seller</option>
+                <option value="IndustryExpert">Industry Expert</option>
+            </select>
             <input type="text" name="name" required placeholder="Enter your name">
             <input type="email" name="email" required placeholder="Enter your Email">
             <input type="password" name="password" required placeholder="Enter your password">
             <input type="password" name="cpassword" required placeholder="Re-Enter your password">
             
-            
-            <!--Only Customer Registratiojn-->
-            <div style="display:none; trasission:5.0s" id="OnlycustomerInput">
+             <!--Only Customer Registratiojn-->
+             <div style="display:none; trasission:5.0s" id="OnlycustomerInput">
                 <div>
                     <p>Hello Customer, <br> welcome to the Customer registration protal. please make sure to enter your
                         correct informations.</p>
                 </div>
             </div>
-
 
 
             <!--Only seller Registratiojn-->
@@ -142,33 +145,44 @@
                     <p>Hello Seller, <br> welcome to the Seller registration protal. please make sure to enter your
                         correct informations.</p>
                 </div>
-                <input type="text" name="address"  placeholder="Enter your address">
+                 <input type="text" name="address"  placeholder="Enter your address">
                 <input type="text" name="telephone"  placeholder="Enter your telephone">
-
-                
             </div>
-
-
-            <!--Only Industry Expert Registratiojn-->
+               <!--Only Industry Expert Registratiojn-->
             
             
-            <div style="display:none; trasission:5.0s" id="IndustryExpert">
+               <div style="display:none; trasission:5.0s" id="IndustryExpert">
             
-                 <div>
-                    <p>Hello Expert, <br> welcome to the Expert registration protal. please make sure to enter your
-                        correct informations.</p>
-                </div>
-                <input type="text" name="address"  placeholder="Enter your address">
-                <input type="text" name="telephone"  placeholder="Enter your telephone">
-                <input type="file" name="qualifications"  placeholder="Drop your Qualifications here">
-                
-                
+            <div>
+               <p>Hello Expert, <br> welcome to the Expert registration protal. please make sure to enter your
+                   correct informations.</p>
+           </div>
+      
+           
 
-                <div>
+           <div>
+           
+                    <input type="text" name="address"  placeholder="Enter your address">
+                    <input type="text" name="telephone"  placeholder="Enter your telephone">
+                    <input type="file" name="qualifications"  placeholder="Drop your Qualifications here">
                     <p>To maintain the quality of service. We will verify your documents within one business day.</p>
                     <p>Your Expert login password will be diliverd as a mail to your private mail address.</p>
-                </div>
-            </div>
+           </div>
+       </div>
+       
+       
+           
+           
+            
+            
+            
+            
+           
+
+
+
+
+         
 
             <input type="submit" name="submit" value="register now" class="form-btn">
             <p>Already have an account ? <a href="login_page.php">Login Here</a></p>
