@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+        session_start();
+        try {
+                   if( $_SESSION['name_type'] !="Seller"){
+                    header('location:login_page.php');
+            }
+        } catch (\Throwable $th) {
+            header('location:login_page.php');
+        }
+?>
 <html lang="en">
 
 <head>
@@ -13,11 +23,11 @@
         <div class="content">
         <pre>
             <?php
-            session_start();
             print_r($_SESSION);
             ?>
             </pre>
             <h3>This is Seller Page</h3>
+            <a href="logout.php">Log out</a>
         </div>
     </div>
 </body>
