@@ -1,38 +1,49 @@
 <?php
-@include 'config.php' ;
-session_start();
+    @include 'config.php';
+    
+    session_start();
+    if (isset($_POST['submit'])) {
+        
 
-if(isset($_POST['submit'] )){
+        # Common For All 
+        $name = mysqli_real_escape_string($conn, $_POST['name']);
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $pass = md5($_POST['password']);
+        $cpass = md5($_POST['cpassword']);
+        $user_type = $_POST['user_type'];
+        $address = mysqli_real_escape_string($conn, $_POST['address']);
+        $telephone = mysqli_real_escape_string($conn, $_POST['telephone']);    
+        $aaddress = mysqli_real_escape_string($conn, $_POST['address']);
+        $ttelephone = mysqli_real_escape_string($conn, $_POST['telephone']);    
+        $qualifications = mysqli_real_escape_string($conn, $_POST['qualifications']);
+    
+        # IF USER ALREADY EXIST ?
+        $select = " SELECT * FROM user_form WHERE email = '$email' && password = '$pass'";
 
-    $name = mysqli_real_escape_string($conn, $_POST ['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = md5($_POST['password']);
-    $cpass = md5($_POST['cpassword']);
-    $user_type = $_POST['user_type'];
-    
-    $select = "SELECT * FROM user_form WHERE email = '$email' $$ password = '$pass'";
-    
-    $result = mysqli_query($conn, $select);
-    
-    if(mysqli_num_rows($result) > 0){
-        
-        $row = mysqli_fetch_array($result);
-        
-        if($row['user_type'] == 'admin'){
-            $_SESSION['admin_name'] = $row['name'];
-            header('location : admin_page.php');
+        $result = mysqli_query($conn, $select);
+     
+        if(mysqli_num_rows($result) > 0){
+     
+           $row = mysqli_fetch_array($result);
+     
+           if($row['user_type'] == 'Seller'){
+     
+              $_SESSION['name'] = $row['name'];
+              header('location:seller_page.php');
+     
+           }elseif($row['user_type'] == 'Customer'){
+     
+              $_SESSION['user_name'] = $row['name'];
+              header('location:user_page.php');
+     
+           }
+          
+        }else{
+           $error[] = 'incorrect email or password!';
         }
-        
-        elseif($row['user_type'] == 'user'){
-            $_SESSION['user_name'] = $row['name'];
-            header('location : user_page.php');
-        }
-        
-        else{
-            $error[] = 'Incorrect username or password';
-        }
-}   }
-?>
+     
+     };
+     ?>
 
 
 <!DOCTYPE html>
@@ -51,8 +62,8 @@ if(isset($_POST['submit'] )){
             
             <?php
                 if(isset($error)){
-                    foreach( $error as $error){
-                        echo '<span class = "error-msg">' .$error. '</span>';
+                    foreach($error as $error){
+                        echo '<span class="error-msg">'.$error.'</span>';
                     };
                 };
             ?>
