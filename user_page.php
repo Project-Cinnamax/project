@@ -9,6 +9,12 @@
     <body>
         <div class="container">
             <div class="content">
+            <pre>
+            <?php
+            session_start();
+            print_r($_SESSION);
+            ?>
+            </pre>
                 <h3>This is Customer Page</h3>
             </div>
         </div>
