@@ -2,7 +2,7 @@
 <?php
         session_start();
         try {
-                   if( $_SESSION['name_type'] !="Customer"){
+                   if( $_SESSION['name_type'] !="IndustryExpert"){
                     header('location:login_page.php');
             }
         } catch (\Throwable $th) {
@@ -20,11 +20,11 @@
         <div class="container">
             <div class="content">
             <pre>
-            <?php   
+            <?php
             print_r($_SESSION);
             ?>
             </pre>
-                <h3>This is Customer Page</h3>
+                <h3>This is Approved Expert</h3>
                 <a href="logout.php">Log out</a>
             </div>
         </div>
