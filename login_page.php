@@ -1,25 +1,15 @@
 <?php
     @include 'config.php';
     
-    session_start();
     if (isset($_POST['submit'])) {
         
 
         # Common For All 
-        $name = mysqli_real_escape_string($conn, $_POST['name']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $pass = md5($_POST['password']);
-        $cpass = md5($_POST['cpassword']);
-        $user_type = $_POST['user_type'];
-        $address = mysqli_real_escape_string($conn, $_POST['address']);
-        $telephone = mysqli_real_escape_string($conn, $_POST['telephone']);    
-        $aaddress = mysqli_real_escape_string($conn, $_POST['address']);
-        $ttelephone = mysqli_real_escape_string($conn, $_POST['telephone']);    
-        $qualifications = mysqli_real_escape_string($conn, $_POST['qualifications']);
     
         # IF USER ALREADY EXIST ?
-        $select = " SELECT * FROM user_form WHERE email = '$email' && password = '$pass'";
-
+        $select = " SELECT * FROM all_user WHERE email = '$email' && password = '$pass'";
         $result = mysqli_query($conn, $select);
      
         if(mysqli_num_rows($result) > 0){
@@ -27,15 +17,21 @@
            $row = mysqli_fetch_array($result);
      
            if($row['user_type'] == 'Seller'){
-     
-              $_SESSION['name'] = $row['name'];
-              header('location:seller_page.php');
+            session_start();
+              session_unset();
+              session_destroy();
+              session_start();
+              $_SESSION['name_type'] = $row['user_type'];
+              header('location:Seller_page.php');
      
            }elseif($row['user_type'] == 'Customer'){
-     
-              $_SESSION['user_name'] = $row['name'];
+            session_start();
+              session_unset();
+              session_destroy();
+              session_start();
+              $_SESSION['name_type'] = $row['user_type'];
+              
               header('location:user_page.php');
-     
            }
           
         }else{
