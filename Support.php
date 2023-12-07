@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Support</title>
+        <title>SUPPORT</title>
         <link rel="stylesheet" href="Home.css">
         <link rel="stylesheet" href="Support.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
