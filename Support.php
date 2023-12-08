@@ -22,10 +22,11 @@
                 <img src ="https://static.vecteezy.com/system/resources/thumbnails/019/515/472/small_2x/cinnamon-plant-tree-skin-spice-taste-cooking-food-hipster-logo-design-icon-illustration-template-vector.jpg" class ="logo">
                 <i class="fa fa-times"id="icon" onclick="hidemenu()"></i>
                 <ul>
-                    <li><a href="Home.html">Home</a></li>
-                    <!--</1><li><a href="Support.html">Farmer section</a></li>
+                    <li><a href="Home.php">Home</a></li>
+              
+                    <!-- </1><li><a href="Support.html">Farmer section</a></li>
                     <li><a href="Support.html">Industry Expert</a></li>
-                    <li><a href="Shop.html">Help Center</a></li>-->
+                    <li><a href="Shop.html">Help Center</a></li>--> 
 
 
                  </ul>
@@ -58,13 +59,13 @@
     <button class="icon-button"><i class="fa fa-question aria-hidden="true" class="icon"></i><p class="T"> Your Question</p></button>
   </div>
 </section>
-<section style="padding-left:25%;">
+
   <?php
     include 'index.php';
   
   
   ?>
-</section>
+
 
 <section class="Second">
     <div id="row" class="row1">

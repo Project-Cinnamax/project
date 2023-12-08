@@ -3,16 +3,23 @@
 
    <div class="flex">
 
-      <a href="Home.html" class="logo">Cinnamax</a>
+      <a href="Home.php" class="logo">Cinnamax</a>
 
       <nav class="navbar">
-         <a href="admin.php">add products</a>
+         <?php
+               session_start();
+               if (isset($_SESSION['name_type'])) {
+                  if ($_SESSION['name_type']=="Seller") {
+                     echo ' <a href="admin.php">add products</a>';
+                 }
+               }
+         ?>
          <a href="products.php">view products</a>
       </nav>
 
       <?php
       
-      $select_rows = mysqli_query($conn, "SELECT * FROM `cart`") or die('query failed'. mysqli_error($conn));
+      $select_rows = mysqli_query($conn2, "SELECT * FROM `cart`") or die('query failed'. mysqli_error($conn2));
       $row_count = mysqli_num_rows($select_rows);
 
       ?>

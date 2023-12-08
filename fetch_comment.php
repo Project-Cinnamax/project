@@ -13,17 +13,18 @@ function fetch_comments($connect)
     $result = $statement->fetchAll();
 
     foreach ($result as $row) {
-        $output .= '
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>Question</b> By <b>' . $row["comment_sender_name"] . '</b> on <i>' . $row["date"] . '</i></div>
-                <div class="panel-body">' . $row["comment"] . '</div>
-                <div class="panel-footer" align="right"><button type="button" class="btn btn-default reply" id="' . $row["comment_id"] . '">Reply</button></div>
-            </div>
-        ';
-        $output .= get_reply_comment($connect, $row["comment_id"]);
-    }
+    $output .= '
+        <div class="panel panel-default" style="justify-content: center;display:flex;">
+            <div class="panel-heading"><b style="color:red;font-size:30px">Question</b> By <b style="color:blue;font-size :25px;">' . $row["comment_sender_name"] . '</b> on <i > ' . $row["date"] . '</i></div>
+            
+            <div class="panel-body"><br>' . $row["comment"] . '</div>
+            <div class="panel-footer"><button type="button" class="btn btn-default reply" id="' . $row["comment_id"] . '">Reply</button></div>
+        </div>
+    ';
+    $output .= get_reply_comment($connect, $row["comment_id"]);
+}
 
-    return $output;
+return $output;
 }
 
 function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
@@ -41,7 +42,7 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
     }
     if ($count > 0) {
         foreach ($result as $row) {
-            $output .= '<div class="panel panel-default" style="margin-left:' . $marginleft . 'px">
+            $output .= '<div class="panel panel-default"style="margin-left:' . $marginleft . 'px;justify-content: center;display:flex;">
                 <div class="panel-heading"><b>Replied</b>By <b>' . $row["comment_sender_name"] . '</b> on <i>' . $row["date"] . '</i></div>
                 <div class="panel-body">' . $row["comment"] . '</div>
                 <div class="panel-footer" align="right"><button type="button" class="btn btn-default reply" id="' . $row["comment_id"] . '">Reply</button></div>

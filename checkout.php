@@ -15,7 +15,7 @@ if(isset($_POST['order_btn'])){
    $country = $_POST['country'];
    $pin_code = $_POST['pin_code'];
 
-   $cart_query = mysqli_query($conn, "SELECT * FROM `cart`");
+   $cart_query = mysqli_query($conn2, "SELECT * FROM `cart`");
    $price_total = 0;
    if(mysqli_num_rows($cart_query) > 0){
       while($product_item = mysqli_fetch_assoc($cart_query)){
@@ -26,7 +26,7 @@ if(isset($_POST['order_btn'])){
    };
 
    $total_product = implode(', ',$product_name);
-   $detail_query = mysqli_query($conn, "INSERT INTO `order`(name, number, email, method, flat, street, city, state, country, pin_code, total_product, total_price) VALUES('$name','$number','$email','$method','$flat','$street','$city','$state','$country','$pin_code','$total_product','$price_total')") or die('query failed'. mysqli_error($conn));
+   $detail_query = mysqli_query($conn2, "INSERT INTO `order`(name, number, email, method, flat, street, city, state, country, pin_code, total_product, total_price) VALUES('$name','$number','$email','$method','$flat','$street','$city','$state','$country','$pin_code','$total_product','$price_total')") or die('query failed'. mysqli_error($conn2));
 
    if($cart_query && $detail_query){
       echo "
@@ -84,7 +84,7 @@ if(isset($_POST['order_btn'])){
 
    <div class="display-order">
       <?php
-         $select_cart = mysqli_query($conn, "SELECT * FROM `cart`");
+         $select_cart = mysqli_query($conn2, "SELECT * FROM `cart`");
          $total = 0;
          $grand_total = 0;
          if(mysqli_num_rows($select_cart) > 0){

@@ -5,12 +5,12 @@ if (isset($_POST['submit'])) {
 
 
     # Common For All 
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $email = mysqli_real_escape_string($conn1, $_POST['email']);
     $pass = md5($_POST['password']);
 
     # IF USER ALREADY EXIST ?
     $select = " SELECT * FROM all_user WHERE email = '$email' && password = '$pass'";
-    $result = mysqli_query($conn, $select);
+    $result = mysqli_query($conn1, $select);
 
     if (mysqli_num_rows($result) > 0) {
 
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
             session_destroy();
             session_start();
             $_SESSION['name_type'] = $row['user_type'];
-            header('location:Seller_page.php');
+            header('location:Home.php');
 
         } elseif ($row['user_type'] == 'Customer') {
             session_start();
@@ -30,10 +30,10 @@ if (isset($_POST['submit'])) {
             session_destroy();
             session_start();
             $_SESSION['name_type'] = $row['user_type'];
-            header('location:user_page.php');
+            header('location:Home.php');
         } elseif ($row['user_type'] == 'IndustryExpert') {
             $select_Expert = " SELECT * FROM Expert WHERE email = '$email' ";
-            $result_Expert = mysqli_query($conn, $select_Expert);
+            $result_Expert = mysqli_query($conn1, $select_Expert);
 
             if (mysqli_num_rows($result_Expert) > 0) {
 
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
                 if ($row['Status'] == 'Approved') {
                     header('location:approved_expert.php');
                 } elseif ($row['Status'] == 'Pending') {
-                    header('location:pending_expert.php');
+                    header('location:pending_expert.html');
                 }
             }
         }
@@ -64,6 +64,7 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+<li><a href="Home.php">Go Back</a></li>
 
 <head>
     <meta charset="UTF-8">

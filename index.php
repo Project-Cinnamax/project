@@ -10,10 +10,10 @@
 </head>
 <body>
     <br/>
-    <h2 style="text-align: center;"><a href="#">Comment System</a></h2>
+    <h2 style="text-align: center;font-family:sans-serif;font-weight:300;color:grey">Add a Discussion Form</h2>
     <br/>
-    <div class="container">
-        <form method="POST" id="comment_form">
+    <div class="container" style="justify-content: center;display:flex;">
+        <form method="POST" id="comment_form" >
             <div class="form-group">
                 <input type="text" name="comment_name" id="comment_name" class="form-control" placeholder="Enter Topic">
             </div>
@@ -25,11 +25,12 @@
                 <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit"/>
             </div>
         </form>
-        <span id="comment_message"></span>
+        
+        
+    </div>
+    <div id="comment_message" ></div>
         <br/>
         <div id="display_comment"></div>
-    </div>
-
     <script>
         $(document).ready(function() {
             $('#comment_form').on('submit', function(event) {
@@ -48,6 +49,7 @@
                     }
                 });
             });
+    
     load_comment();
     function load_comment(){
         $.ajax({

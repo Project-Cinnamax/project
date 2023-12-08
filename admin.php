@@ -9,7 +9,7 @@ if(isset($_POST['add_product'])){
    $p_image_tmp_name = $_FILES['p_image']['tmp_name'];
    $p_image_folder = 'uploaded_img/'.$p_image;
 
-   $insert_query = mysqli_query($conn, "INSERT INTO `products`(name, price, image) VALUES('$p_name', '$p_price', '$p_image')") or die('query failed');
+   $insert_query = mysqli_query($conn2, "INSERT INTO `products`(name, price, image) VALUES('$p_name', '$p_price', '$p_image')") or die('query failed');
 
    if($insert_query){
       move_uploaded_file($p_image_tmp_name, $p_image_folder);
@@ -21,7 +21,7 @@ if(isset($_POST['add_product'])){
 
 if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];
-   $delete_query = mysqli_query($conn, "DELETE FROM `products` WHERE id = $delete_id ") or die('query failed');
+   $delete_query = mysqli_query($conn2, "DELETE FROM `products` WHERE id = $delete_id ") or die('query failed');
    if($delete_query){
       header('location:admin.php');
       $message[] = 'product has been deleted';
@@ -39,7 +39,7 @@ if(isset($_POST['update_product'])){
    $update_p_image_tmp_name = $_FILES['update_p_image']['tmp_name'];
    $update_p_image_folder = 'uploaded_img/'.$update_p_image;
 
-   $update_query = mysqli_query($conn, "UPDATE `products` SET name = '$update_p_name', price = '$update_p_price', image = '$update_p_image' WHERE id = '$update_p_id'");
+   $update_query = mysqli_query($conn2, "UPDATE `products` SET name = '$update_p_name', price = '$update_p_price', image = '$update_p_image' WHERE id = '$update_p_id'");
 
    if($update_query){
       move_uploaded_file($update_p_image_tmp_name, $update_p_image_folder);
@@ -111,7 +111,7 @@ if(isset($message)){
       <tbody>
          <?php
          
-            $select_products = mysqli_query($conn, "SELECT * FROM `products`");
+            $select_products = mysqli_query($conn2, "SELECT * FROM `products`");
             if(mysqli_num_rows($select_products) > 0){
                while($row = mysqli_fetch_assoc($select_products)){
          ?>
@@ -144,7 +144,7 @@ if(isset($message)){
    
    if(isset($_GET['edit'])){
       $edit_id = $_GET['edit'];
-      $edit_query = mysqli_query($conn, "SELECT * FROM `products` WHERE id = $edit_id");
+      $edit_query = mysqli_query($conn2, "SELECT * FROM `products` WHERE id = $edit_id");
       if(mysqli_num_rows($edit_query) > 0){
          while($fetch_edit = mysqli_fetch_assoc($edit_query)){
    ?>

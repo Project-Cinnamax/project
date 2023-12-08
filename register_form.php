@@ -10,35 +10,36 @@
 
 <body>
 <?php
+    
     @include 'config.php';
     if (isset($_POST['submit'])) {
         
 
         # Common For All 
-        $name = mysqli_real_escape_string($conn, $_POST['name']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $name = mysqli_real_escape_string($conn1, $_POST['name']);
+        $email = mysqli_real_escape_string($conn1, $_POST['email']);
         $pass = md5($_POST['password']);
         $cpass = md5($_POST['cpassword']);
         $user_type = $_POST['user_type'];
         
         # Only Seller
         if ( $_POST['user_type'] =="Seller") {
-            $address = mysqli_real_escape_string($conn, $_POST['address']);
-            $telephone = mysqli_real_escape_string($conn, $_POST['telephone']);    
+            $address = mysqli_real_escape_string($conn1, $_POST['address']);
+            $telephone = mysqli_real_escape_string($conn1, $_POST['telephone']);    
         }
         
         # Only Industry 
         if ( $_POST['user_type'] =="IndustryExpert") {
-            $aaddress = mysqli_real_escape_string($conn, $_POST['address']);
-            $ttelephone = mysqli_real_escape_string($conn, $_POST['telephone']);    
-            $qualifications = mysqli_real_escape_string($conn, $_POST['qualifications']);
+            $aaddress = mysqli_real_escape_string($conn1, $_POST['address']);
+            $ttelephone = mysqli_real_escape_string($conn1, $_POST['telephone']);    
+            $qualifications = mysqli_real_escape_string($conn1, $_POST['qualifications']);
         }
     
         # IF USER ALREADY EXIST ?
         $select = "SELECT * FROM all_user WHERE email = '$email' && password = '$pass' ";
         
 
-        $result = mysqli_query($conn, $select);
+        $result = mysqli_query($conn1, $select);
 
         if (mysqli_num_rows($result) > 0) {
             $error[] = 'User already exist';
@@ -48,10 +49,10 @@
             } else {
 
                 if ($user_type == 'Customer') {
-                    if (addNewAll($conn,$email, $pass, $user_type)) {
+                    if (addNewAll($conn1,$email, $pass, $user_type )) {
                         $error[] = 'You have successfully registerd as Customer / Buyer !!!';
-                        $insert = "INSERT INTO user_form(name, email, password, user_type) VALUES(' $name', '$email', '$pass',  '$user_type')";
-                        mysqli_query($conn, $insert);
+                        $insert = "INSERT INTO user_form(name, email, password, user_type) VALUES('$name', '$email', '$pass',  '$user_type')";
+                        mysqli_query($conn1, $insert);
                         sleep(1);
                         header('location:login_page.php');
                     }else{
@@ -60,10 +61,10 @@
                 } 
                 
                 else if ($user_type == 'Seller') {
-                    if (addNewAll($conn,$email, $pass, $user_type )) {
+                    if (addNewAll($conn1,$email, $pass, $user_type )) {
                         $error[] = 'You have successfully registerd as Seller !!!';
-                        $insert = "INSERT INTO seller_form(name, email, password, user_type,address,telephone) VALUES(' $name', '$email', '$pass',  '$user_type', '$address', '$telephone' )";
-                        mysqli_query($conn, $insert);
+                        $insert = "INSERT INTO seller_form(name, email, password, user_type,address,telephone) VALUES('$name', '$email', '$pass',  '$user_type', '$address', '$telephone' )";
+                        mysqli_query($conn1, $insert);
                         sleep(1);
                         header('location:login_page.php');
                     }else{
@@ -72,25 +73,25 @@
                 } 
                 
                 else if ($user_type == 'IndustryExpert') {
-                    if (addNewAll($conn,$email, $pass, $user_type)) {
+                    if (addNewAll($conn1,$email, $pass, $user_type)) {
                         $error[] = 'You have successfully registerd as Industry Expert !!!';
-                        $insert = "INSERT INTO expert(name, email, password, user_type,address,telephone,qualifications) VALUES(' $name', '$email', '$pass',  '$user_type', '$aaddress', '$ttelephone', '$qualifications')";
-                        mysqli_query($conn, $insert);
+                        $insert = "INSERT INTO expert(name, email, password, user_type,address,telephone,qualifications) VALUES('$name', '$email', '$pass',  '$user_type', '$aaddress', '$ttelephone', '$qualifications')";
+                        mysqli_query($conn1, $insert);
                         sleep(1);
                         header('location:login_page.php');
                     }else{
                         $error[] = 'user ready exit';
                     }
                 }
-                mysqli_close($conn);
+                mysqli_close($conn1);
             }
         }
     }
     
-    function addNewAll($conn,$email, $pass, $type){
+    function addNewAll($conn1,$email, $pass, $type){
         try {
             $insertAll = "INSERT INTO `all_user` (`id`, `email`, `password`, `user_type`) VALUES (NULL, '$email', '$pass', '$type')";
-            mysqli_query($conn, $insertAll);
+            mysqli_query($conn1, $insertAll);
             echo '<script>console.log("saasas");</script>';
             return true;
         } catch (\Throwable $th) {

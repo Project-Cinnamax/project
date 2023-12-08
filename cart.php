@@ -5,7 +5,7 @@
 if(isset($_POST['update_update_btn'])){
    $update_value = $_POST['update_quantity'];
    $update_id = $_POST['update_quantity_id'];
-   $update_quantity_query = mysqli_query($conn, "UPDATE `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
+   $update_quantity_query = mysqli_query($conn2, "UPDATE `cart` SET quantity = '$update_value' WHERE id = '$update_id'");
    if($update_quantity_query){
       header('location:cart.php');
    };
@@ -13,12 +13,12 @@ if(isset($_POST['update_update_btn'])){
 
 if(isset($_GET['remove'])){
    $remove_id = $_GET['remove'];
-   mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$remove_id'");
+   mysqli_query($conn2, "DELETE FROM `cart` WHERE id = '$remove_id'");
    header('location:cart.php');
 };
 
 if(isset($_GET['delete_all'])){
-   mysqli_query($conn, "DELETE FROM `cart`");
+   mysqli_query($conn2, "DELETE FROM `cart`");
    header('location:cart.php');
 }
 
@@ -64,7 +64,7 @@ if(isset($_GET['delete_all'])){
 
          <?php 
          
-         $select_cart = mysqli_query($conn, "SELECT * FROM `cart`");
+         $select_cart = mysqli_query($conn2, "SELECT * FROM `cart`");
          $grand_total = 0;
          if(mysqli_num_rows($select_cart) > 0){
             while($fetch_cart = mysqli_fetch_assoc($select_cart)){
