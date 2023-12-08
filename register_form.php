@@ -35,7 +35,7 @@
         }
     
         # IF USER ALREADY EXIST ?
-        $select = "SELECT * FROM user_form WHERE email = '$email' && password = '$pass' ";
+        $select = "SELECT * FROM all_user WHERE email = '$email' && password = '$pass' ";
         
 
         $result = mysqli_query($conn, $select);
@@ -48,32 +48,58 @@
             } else {
 
                 if ($user_type == 'Customer') {
-                    $error[] = 'You have successfully registerd as Customer / Buyer !!!';
-                    $insert = "INSERT INTO user_form(name, email, password, user_type) VALUES(' $name', '$email', '$pass',  '$user_type')";
-                    mysqli_query($conn, $insert);
-                    sleep(1);
-                    header('location:login_page.php');
+                    if (addNewAll($conn,$email, $pass, $user_type)) {
+                        $error[] = 'You have successfully registerd as Customer / Buyer !!!';
+                        $insert = "INSERT INTO user_form(name, email, password, user_type) VALUES(' $name', '$email', '$pass',  '$user_type')";
+                        mysqli_query($conn, $insert);
+                        sleep(1);
+                        header('location:login_page.php');
+                    }else{
+                        $error[] = 'user ready exit';
+                    }
                 } 
                 
                 else if ($user_type == 'Seller') {
-                    $error[] = 'You have successfully registerd as Seller !!!';
-                    $insert = "INSERT INTO seller_form(name, email, password, user_type,address,telephone) VALUES(' $name', '$email', '$pass',  '$user_type', '$address', '$telephone' )";
-                    mysqli_query($conn, $insert);
-                    sleep(1);
-                    header('location:login_page.php');
+                    if (addNewAll($conn,$email, $pass, $user_type )) {
+                        $error[] = 'You have successfully registerd as Seller !!!';
+                        $insert = "INSERT INTO seller_form(name, email, password, user_type,address,telephone) VALUES(' $name', '$email', '$pass',  '$user_type', '$address', '$telephone' )";
+                        mysqli_query($conn, $insert);
+                        sleep(1);
+                        header('location:login_page.php');
+                    }else{
+                        $error[] = 'user ready exit';
+                    }
                 } 
                 
                 else if ($user_type == 'IndustryExpert') {
-                    $error[] = 'You have successfully registerd as Industry Expert !!!';
-                    $insert = "INSERT INTO expert(name, email, password, user_type,address,telephone,qualifications) VALUES(' $name', '$email', '$pass',  '$user_type', '$aaddress', '$ttelephone', '$qualifications')";
-                    mysqli_query($conn, $insert);
-                    sleep(1);
-                    header('location:login_page.php');
+                    if (addNewAll($conn,$email, $pass, $user_type)) {
+                        $error[] = 'You have successfully registerd as Industry Expert !!!';
+                        $insert = "INSERT INTO expert(name, email, password, user_type,address,telephone,qualifications) VALUES(' $name', '$email', '$pass',  '$user_type', '$aaddress', '$ttelephone', '$qualifications')";
+                        mysqli_query($conn, $insert);
+                        sleep(1);
+                        header('location:login_page.php');
+                    }else{
+                        $error[] = 'user ready exit';
+                    }
                 }
                 mysqli_close($conn);
             }
         }
     }
+    
+    function addNewAll($conn,$email, $pass, $type){
+        try {
+            $insertAll = "INSERT INTO `all_user` (`id`, `email`, `password`, `user_type`) VALUES (NULL, '$email', '$pass', '$type')";
+            mysqli_query($conn, $insertAll);
+            echo '<script>console.log("saasas");</script>';
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+    
+    
+    
     ?>
 
     <div class="form-container">
